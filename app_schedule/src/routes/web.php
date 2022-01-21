@@ -12,10 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//CalendarController
+Route::get('/', 'CalendarController@show')->name('calendar.show')->middleware('auth');
+Route::get('/calendar', 'CalendarController@show')->name('calendar.show')->middleware('auth');
+
+//EventController
+Route::get('/events/create', 'EventController@create')->name('events.create');
+Route::post('/events', 'EventController@store')->name('events.store');
+Route::get('/events/{id}', 'EventController@show')->name('events.show');
+Route::get('/events/{id}/edit', 'EventController@edit')->name('events.edit');
+Route::post('/events/{id}', 'EventController@update')->name('events.update');
+Route::delete('/events/{id}', 'EventController@destroy')->name('events.destroy');

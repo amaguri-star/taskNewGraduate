@@ -6,10 +6,10 @@
             <h1 class="dateTitle">{{ $thisDate->year }}-{{ $thisDate->month }}</h1>
             <div class="monthButton">
                 <button type="button" class="btn btn-primary prevMonthBtn">
-                    <a  
+                    <a
                         href="{{ route('calendar.show', ['year' => $prevMonth->year, 'month' => $prevMonth->month]) }}">先月</a></button>
                 <button type="button" class="btn btn-primary nextMonthBtn">
-                    <a  
+                    <a
                         href="{{ route('calendar.show', ['year' => $nextMonth->year, 'month' => $nextMonth->month]) }}">来月</a></button>
             </div>
         </div>
@@ -28,9 +28,13 @@
                     @endif
 
                     @if ($date->month == $thisDate->month)
-                        <td
-                            class="day {{ $date->toDateString() == $currentDate->toDateString() ? 'currentDate' : '' }} {{ $date->isSaturday() ? 'saturday' : '' }} {{ $date->isSunday() ? 'sunday' : '' }} {{ $date->month != $thisDate->month ? 'otherMonth' : '' }} ">
-                            {{ $date->day }}</td>
+                        @if (array_key_exists($date->toDateString(), $holidaysDate))
+                            <td class="day holiday">{{ $date->day }} <p>{{ $holidaysDate[$date->toDateString()] }}</p></td>
+                        @else
+                            <td
+                                class="day {{ $date->toDateString() == $currentDate->toDateString() ? 'currentDate' : '' }} {{ $date->isSaturday() ? 'saturday' : '' }} {{ $date->isSunday() ? 'sunday' : '' }}">
+                                {{ $date->day }}</td>
+                        @endif
                     @else
                         <td class="day"></td>
                     @endif

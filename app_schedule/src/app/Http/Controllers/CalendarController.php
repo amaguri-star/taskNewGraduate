@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Datetime;
+use Yasumi\Yasumi;
 
 class CalendarController extends Controller
 {
@@ -40,8 +42,24 @@ class CalendarController extends Controller
         // 日時を格納する変数
         $dates = [];
 
+        //１年間の日本の祝日を取得
+        $holidays = Yasumi::create('Japan', $date->year, 'ja_JP');
+
+        // 今月の祝日を取得
+        $holidaysInBetween = $holidays->between(
+            new DateTime($date->month . '/' . $date->day . '/' . $date->year),
+            new DateTime($date->month . '/' . $daysInMonth . '/' . $date->year));
+        
+        // 祝日の日付をKey, 祝日名をValueに持つ変数
+        $holidaysDate = [];
+        
+        // ループで回して一つづつ取り出す
+        foreach ($holidaysInBetween as $holiday) {
+            $holidaysDate[strval($holiday)] = $holiday->getName();
+        }
+
+        // ループで回して一つづつ取り出す
         for ($i = 0; $i < $count; $i++, $startDay->addDay()) {
-            // copyしないと全部同じオブジェクトを入れてしまうことになる
             $dates[] = $startDay->copy();
         }
 
@@ -50,6 +68,7 @@ class CalendarController extends Controller
             'currentDate' => $currentDate,
             'thisDate' => $date,
             'prevMonth' => $prevMonth,
-            'nextMonth' => $nextMonth]);
+            'nextMonth' => $nextMonth, 
+            'holidaysDate' => $holidaysDate]);
     }
 }

@@ -1,3 +1,59 @@
+a {
+    display: block;
+    widht: 100%;
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+.btn {
+    padding: 0;
+}
+
+.prevMonthBtn, .nextMonthBtn {
+    width: 55px;
+    height: 25px;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.calendarHeader {
+    display: flex;
+}
+
+.monthButton {
+    margin-left: auto;
+}
+
+.dateTitle {
+    
+}
+
+.table th {
+    text-align: center;
+}
+
+.table td {
+    height: 100px;
+}
+
 .currentDate {
     background-color: rgba(84, 202, 181, 0.7);
+}
+
+.otherMonth {
+    opacity: 0.4;
+}
+
+.saturday {
+    color: blue;
+}
+
+.sunday {
+    color: red;
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 //CalendarController
-Route::get('/', 'CalendarController@show')->name('calendar.show')->middleware('auth');
-Route::get('/calendar', 'CalendarController@show')->name('calendar.show')->middleware('auth');
+Route::get('/calendar/{year}/{month}', 'CalendarController@show')->name('calendar.show')->middleware('auth');
+
+// '/' にアクセスした時に今月の月のカレンダーにリダイレクト
+Route::get('/', function() {
+    return redirect()->route('calendar.show', ['year' => Carbon::now()->year, 'month' => Carbon::now()->month]);
+});
 
 //EventController
 Route::get('/events/create', 'EventController@create')->name('events.create');

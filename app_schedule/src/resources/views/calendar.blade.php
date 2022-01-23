@@ -28,15 +28,20 @@
                     @endif
 
                     @if ($date->month == $thisDate->month)
-                        @if (array_key_exists($date->toDateString(), $holidaysDate))
-                            <td class="day text-success {{ $date->toDateString() == $currentDate->toDateString() ? 'bg-warning bg-gradient' : '' }}">{{ $date->day }}
-                                <span>{{ $holidaysDate[$date->toDateString()] }}</span>
-                            </td>
-                        @else
-                            <td
-                                class="day {{ $date->toDateString() == $currentDate->toDateString() ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }} {{ $date->isSunday() ? 'text-danger' : '' }}">
-                                {{ $date->day }}</td>
-                        @endif
+                        <td
+                            class="p-0 day
+                             {{ $date->toDateString() == $currentDate->toDateString() ? 'bg-warning bg-gradient' : '' }} 
+                             {{ $date->isSaturday() ? 'text-primary' : '' }}
+                             {{ $date->isSunday() ? 'text-danger' : '' }} 
+                             {{ array_key_exists($date->toDateString(), $holidaysDate) ? 'text-success' : '' }}">
+                            <a class="d-block w-100 h-100"
+                                href="{{ route('events.create', ['year' => $date->year, 'month' => $date->month, 'day' => $date->day]) }}">
+                                {{ $date->day }}
+                                <span>
+                                    {{ array_key_exists($date->toDateString(), $holidaysDate) ? $holidaysDate[$date->toDateString()] : '' }}
+                                </span>
+                            </a>
+                        </td>
                     @else
                         <td class="day"></td>
                     @endif

@@ -21,9 +21,10 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($year, $month, $day)
     {
-        //
+        $date = sprintf('%04d-%02d-%02d', $year, $month, $day);
+        return view('createEventPage', ['date' => $date]);
     }
 
     /**

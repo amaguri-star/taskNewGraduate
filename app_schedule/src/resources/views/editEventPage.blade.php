@@ -13,7 +13,7 @@
                         <input type="hidden" name="event_date" value="{{ $date }}">
                         <input type="text" name="title" id="eventForm" class="form-control" />
                         <label class="form-label" for="eventForm">タスクを編集</label>
-                        <button type="button" class="btn btn-primary">編集</button>
+                        <button type="submit" class="btn btn-primary">編集</button>
                     </div>
                 </form>
             </div>

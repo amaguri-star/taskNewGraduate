@@ -14,7 +14,7 @@
                         <input type="text" name="title" id="eventForm" class="form-control" />
                         <label class="form-label" for="eventForm">タスクを登録</label>
                     </div>
-                    <button type="button" class="btn btn-primary">登録</button>
+                    <button type="submit" class="btn btn-primary">登録</button>
                 </form>
             </div>
         </div>

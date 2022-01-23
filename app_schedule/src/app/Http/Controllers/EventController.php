@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($year, $month, $day)
+    public function create(Request $request)
     {
-        $date = sprintf('%04d-%02d-%02d', $year, $month, $day);
+        $date = $request->date;
         return view('createEventPage', ['date' => $date]);
     }
 
@@ -33,20 +25,12 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Event $event)
     {
-        dd($request->all());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $event->fill($request->all());
+        $event->user_id = $request->user()->id;
+        $event->save();
+        return redirect('/');
     }
 
     /**

@@ -30,7 +30,8 @@ class EventController extends Controller
         $event->fill($request->all());
         $event->user_id = $request->user()->id;
         $event->save();
-        return redirect('/');
+        $date = preg_split('#-#', $request->event_date);
+        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
     }
 
     /**

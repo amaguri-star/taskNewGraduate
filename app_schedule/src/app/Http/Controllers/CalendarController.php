@@ -11,7 +11,6 @@ class CalendarController extends Controller
     public function show($year, $month)
     {
         $dateStr = sprintf('%04d-%02d-01', $year, $month);
-
         // 今月
         $date = new Carbon($dateStr);
 

@@ -40,10 +40,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $event)
+    public function edit(Event $event)
     {
-        $date = $request->date;
-        return redirect()->route('calendar.edit', ['date' => $date]);
+        return view('editEventPage', ['event' => $event]);
     }
 
     /**

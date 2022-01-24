@@ -20,7 +20,7 @@ Route::get('/calendar/{year}/{month}', 'CalendarController@show')->name('calenda
 
 Route::get('/events/create', 'EventController@create')->name('events.create');
 Route::post('/events', 'EventController@store')->name('events.store');
-Route::get('/events/{event}', 'EventController@show')->name('events.show');
+// Route::get('/events/{event}', 'EventController@show')->name('events.show');
 Route::get('/events/{event}/edit', 'EventController@edit')->name('events.edit');
 Route::post('/events/{event}', 'EventController@update')->name('events.update');
 Route::delete('/events/{event}', 'EventController@destroy')->name('events.destroy');

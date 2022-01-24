@@ -52,9 +52,11 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $event->fill($request->all())->save();
+        $date = preg_split('#-#', $request->event_date);
+        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
     }
 
     /**

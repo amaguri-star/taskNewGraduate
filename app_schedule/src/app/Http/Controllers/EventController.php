@@ -55,7 +55,7 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->fill($request->all())->save();
-        $date = preg_split('#-#', $request->event_date);
+        $date = preg_split('#-#', $event->event_date);
         return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
     }
 
@@ -65,8 +65,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        $date = preg_split('#-#', $event->event_date);
+        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
     }
 }

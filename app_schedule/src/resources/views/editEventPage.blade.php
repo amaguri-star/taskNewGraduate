@@ -10,11 +10,16 @@
                 <form action="{{ route('events.update', ['event' => $event]) }}" method="POST">
                     @csrf
                     <div class="form-outline my-3">
-                        <input type="hidden" name="event_date" value="{{ $event->event_date }}">
                         <input type="text" name="title" id="eventForm" class="form-control"
-                        value="{{ $event->title }}" />
+                            value="{{ $event->title }}" />
                     </div>
                     <button type="submit" class="btn btn-primary">編集</button>
+                    <button type="submit" class="btn btn-danger" form="deleteForm"
+                        onclick="return confirm('本当に削除しますか?');">削除</button>
+                </form>
+                <form action="{{ route('events.destroy', ['event' => $event]) }}" id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
                 </form>
             </div>
         </div>

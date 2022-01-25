@@ -1,3 +1,11 @@
+/* a:hover {
+    color: 
+} */
+
+.day:hover {
+    background-color: rgba(20, 20, 20, 0.1);
+}
+
 .table {
     width: 100%;
     table-layout: fixed;

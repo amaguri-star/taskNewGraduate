@@ -54,7 +54,7 @@
                             @endforeach
                         </td>
                     @else
-                        <td class="day"></td>
+                        <td></td>
                     @endif
 
                     @if ($date->dayOfWeek == 0)

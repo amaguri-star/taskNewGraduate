@@ -9,11 +9,10 @@ use Yasumi\Yasumi;
 
 class CalendarController extends Controller
 {
-    public function show(Request $request, $year, $month)
+    public function show(Request $request)
     {
-        $dateStr = sprintf('%04d-%02d-01', $year, $month);
         // 今月
-        $date = new Carbon($dateStr);
+        $date = new Carbon($request->year . '-' . $request->month);
 
         // 前月
         $prevMonth = $date->copy()->subMonth();
@@ -60,7 +59,7 @@ class CalendarController extends Controller
 
         // ユーザーのイベントを取得
         $events = $request->user()->events;
-        
+
         // ループで回して一つづつ取り出す
         for ($i = 0; $i < $count; $i++, $startDay->addDay()) {
             $dates[] = $startDay->copy();

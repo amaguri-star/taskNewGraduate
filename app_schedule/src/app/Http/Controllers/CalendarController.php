@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Datetime;
+use Illuminate\Http\Request;
 use Yasumi\Yasumi;
 
 class CalendarController extends Controller
 {
-    public function show($year, $month)
+    public function show(Request $request, $year, $month)
     {
         $dateStr = sprintf('%04d-%02d-01', $year, $month);
         // 今月
@@ -21,7 +22,7 @@ class CalendarController extends Controller
         $nextMonth = $date->copy()->addMonth();
 
         // 今日
-        $currentDate = Carbon::now();
+        $current = Carbon::now();
 
         // 月の日数
         $daysInMonth = $date->daysInMonth;
@@ -48,15 +49,18 @@ class CalendarController extends Controller
         $holidaysInBetween = $holidays->between(
             new DateTime($date->month . '/' . $date->day . '/' . $date->year),
             new DateTime($date->month . '/' . $daysInMonth . '/' . $date->year));
-        
+
         // 祝日の日付をKey, 祝日名をValueに持つ変数
         $holidaysDate = [];
-        
+
         // ループで回して一つづつ取り出す
         foreach ($holidaysInBetween as $holiday) {
             $holidaysDate[strval($holiday)] = $holiday->getName();
         }
 
+        // ユーザーのイベントを取得
+        $events = $request->user()->events;
+        
         // ループで回して一つづつ取り出す
         for ($i = 0; $i < $count; $i++, $startDay->addDay()) {
             $dates[] = $startDay->copy();
@@ -64,10 +68,12 @@ class CalendarController extends Controller
 
         return view('calendar', [
             'dates' => $dates,
-            'currentDate' => $currentDate,
+            'current' => $current->toDateString(),
             'thisDate' => $date,
             'prevMonth' => $prevMonth,
-            'nextMonth' => $nextMonth, 
-            'holidaysDate' => $holidaysDate]);
+            'nextMonth' => $nextMonth,
+            'holidays' => $holidaysDate,
+            'events' => $events,
+        ]);
     }
 }

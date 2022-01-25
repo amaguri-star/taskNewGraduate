@@ -28,19 +28,30 @@
                     @endif
 
                     @if ($date->month == $thisDate->month)
+                        @php
+                            $dateStr = $date->toDateString();
+                            $isHoliday = array_key_exists($dateStr, $holidays);
+                        @endphp
                         <td
-                            class="p-0 day
-                             {{ $date->toDateString() == $currentDate->toDateString() ? 'bg-warning bg-gradient' : '' }} 
-                             {{ $date->isSaturday() ? 'text-primary' : '' }}
-                             {{ $date->isSunday() ? 'text-danger' : '' }} 
-                             {{ array_key_exists($date->toDateString(), $holidaysDate) ? 'text-success' : '' }}">
-                            <a class="d-block w-100 h-100"
-                                href="{{ route('events.create', ['date' => $date->toDateString()]) }}">
-                                {{ $date->day }}
-                                <span>
-                                    {{ array_key_exists($date->toDateString(), $holidaysDate) ? $holidaysDate[$date->toDateString()] : '' }}
-                                </span>
-                            </a>
+                            class="p-2 day {{ $dateStr == $current ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }}{{ $date->isSunday() ? 'text-danger' : '' }} {{ $isHoliday ? 'text-success' : '' }}">
+                            <p class="day_header">
+                                <a href="{{ route('events.create', ['date' => $dateStr]) }}">
+                                    {{ $date->day }}
+                                    <span>
+                                        {{ $isHoliday ? $holidays[$dateStr] : '' }}
+                                    </span>
+                                </a>
+                            </p>
+                            @foreach ($events as $event)
+                                @if ($event->event_date == $dateStr)
+                                    <div>
+                                        <a class="link_event_edit bg-info bg-gradient"
+                                            href="{{ route('events.edit', ['event' => $event]) }}">
+                                            {{ $event->title }}
+                                        </a>
+                                    </div>
+                                @endif
+                            @endforeach
                         </td>
                     @else
                         <td class="day"></td>
@@ -49,6 +60,7 @@
                     @if ($date->dayOfWeek == 0)
                         </tr>
                     @endif
+
                 @endforeach
             </tbody>
         </table>

@@ -1,5 +1,23 @@
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td,
+.link_event_edit {
+    position: relative;
+}
+
+.day_header a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 .table td {
-    width: 50px;
     height: 100px;
 }
 

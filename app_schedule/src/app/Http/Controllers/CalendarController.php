@@ -12,7 +12,7 @@ class CalendarController extends Controller
     public function show(Request $request)
     {
         // 今月
-        $date = new Carbon($request->year . '-' . $request->month);
+        $date = new Carbon($request->date);
 
         // 前月
         $prevMonth = $date->copy()->subMonth();

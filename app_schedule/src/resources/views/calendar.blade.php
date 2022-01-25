@@ -1,16 +1,21 @@
 @extends('layouts.app')
+@php
+$thisDateStr = $thisDate->isoformat('YYYY-MM');
+$prevMonthStr = $prevMonth->isoformat('YYYY-MM');
+$nextMonthStr = $nextMonth->isoformat('YYYY-MM');
+@endphp
 
-@section('title')Calendar {{ $thisDate->year }}-{{ $thisDate->month }}@endsection
+@section('title')Calendar {{ $thisDateStr }}@endsection
 
 @section('content')
     <div class="container">
         <div class="calendarHeader d-flex p-2">
-            <h3 class="dateTitle h3">{{ $thisDate->year }}-{{ $thisDate->month }}</h3>
+            <h3 class="dateTitle h3">{{ $thisDateStr }}</h3>
             <div class="ms-auto d-flex">
                 <a class="d-block btn btn-primary shadow-sm"
-                    href="{{ route('calendar.show', ['year' => $prevMonth->year, 'month' => $prevMonth->month]) }}">先月</a>
+                    href="{{ route('calendar.show', ['date' => $prevMonthStr]) }}">先月</a>
                 <a class="d-block btn btn-primary shadow-sm ms-3"
-                    href="{{ route('calendar.show', ['year' => $nextMonth->year, 'month' => $nextMonth->month]) }}">来月</a>
+                    href="{{ route('calendar.show', ['date' => $nextMonthStr]) }}">来月</a>
             </div>
         </div>
         <table class="table table-bordered">

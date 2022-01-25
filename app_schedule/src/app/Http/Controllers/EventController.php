@@ -15,8 +15,7 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
-        $date = $request->date;
-        return view('createEventPage', ['date' => $date]);
+        return view('createEventPage', ['date' => $request->date]);
     }
 
     /**
@@ -30,8 +29,8 @@ class EventController extends Controller
         $event->fill($request->all());
         $event->user_id = $request->user()->id;
         $event->save();
-        $date = preg_split('#-#', $request->event_date);
-        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
+        $date = changeDateFormat($event->event_date, 'YYYY-MM');
+        return redirect()->route('calendar.show', ['date' => $date]);
     }
 
     /**
@@ -55,8 +54,8 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->fill($request->all())->save();
-        $date = preg_split('#-#', $event->event_date);
-        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
+        $date = changeDateFormat($event->event_date, 'YYYY-MM');
+        return redirect()->route('calendar.show', ['date' => $date]);
     }
 
     /**
@@ -68,7 +67,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
-        $date = preg_split('#-#', $event->event_date);
-        return redirect()->route('calendar.show', ['year' => $date[0], 'month' => $date[1]]);
+        $date = changeDateFormat($event->event_date, 'YYYY-MM');
+        return redirect()->route('calendar.show', ['date' => $date]);
     }
 }

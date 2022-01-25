@@ -27,5 +27,5 @@ Route::delete('/events/{event}', 'EventController@destroy')->name('events.destro
 
 // '/' にアクセスした時に今月の月のカレンダーにリダイレクト
 Route::get('/', function () {
-    return redirect()->route('calendar.show', ['year' => Carbon::now()->year, 'month' => Carbon::now()->month]);
+    return redirect()->route('calendar.show', ['date' => Carbon::now()->isoformat('YYYY-MM')]);
 });

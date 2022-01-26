@@ -10,6 +10,7 @@
                 <form action="{{ route('events.store') }}" method="POST">
                     @csrf
                     <div class="form-outline my-3">
+                        <input type="hidden" name="event_date" value="{{ $date }}">
                         <input type="text" name="title" id="eventForm" class="form-control" />
                         <label class="form-label" for="eventForm">タスクを登録</label>
                     </div>

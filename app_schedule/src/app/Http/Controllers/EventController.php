@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Http\Requests\EventRequest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -24,8 +25,8 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Event $event)
-    {
+    public function store(EventRequest $request, Event $event)
+    {   
         $event->fill($request->all());
         $event->user_id = $request->user()->id;
         $event->save();
@@ -51,7 +52,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(EventRequest $request, Event $event)
     {
         $event->fill($request->all())->save();
         $date = changeDateFormat($event->event_date, 'YYYY-MM');

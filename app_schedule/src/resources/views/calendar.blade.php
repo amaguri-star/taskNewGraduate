@@ -54,8 +54,11 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                             @foreach ($events as $event)
                                 @if ($event->event_date == $dateStr)
                                     <div>
-                                        <a class="link_event_edit bg-info bg-gradient"
-                                            href="{{ route('events.edit', ['event' => $event]) }}">
+                                        <div id="ex-edit-{{ $dateStr }}" class="modal w-50 h-50 m-auto">
+                                            <p>{{ $dateStr }} edit</p>
+                                            <a href="#" rel="modal:close">Close</a>
+                                        </div>
+                                        <a class="link_event_edit bg-info bg-gradient" href="#ex-edit-{{ $dateStr }}" rel="modal:open">
                                             {{ $event->title }}
                                         </a>
                                     </div>

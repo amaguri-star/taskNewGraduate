@@ -39,8 +39,12 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                         @endphp
                         <td
                             class="p-2 day {{ $dateStr == $current ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }}{{ $date->isSunday() ? 'text-danger' : '' }} {{ $isHoliday ? 'text-success' : '' }}">
+                            <div id="ex-{{ $dateStr }}" class="modal w-50 h-50 m-auto">
+                                <p>{{ $dateStr }}</p>
+                                <a href="#" rel="modal:close">Close</a>
+                            </div>
                             <p class="day_header">
-                                <a href="{{ route('events.create', ['date' => $dateStr]) }}">
+                                <a href="#ex-{{ $dateStr }}" rel="modal:open">
                                     {{ $date->day }}
                                     <span>
                                         {{ $isHoliday ? $holidays[$dateStr] : '' }}

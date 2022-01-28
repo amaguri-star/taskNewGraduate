@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/calendar', 'CalendarController@show')->name('calendar.show')->middleware('auth');
-
 Route::get('/events/create', 'EventController@create')->name('events.create');
 Route::post('/events', 'EventController@store')->name('events.store');
 // Route::get('/events/{event}', 'EventController@show')->name('events.show');

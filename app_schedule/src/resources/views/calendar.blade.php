@@ -42,13 +42,15 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                             <div class="day_header">
                                 @include('createEventModal')
                             </div>
-                            @foreach ($events as $event)
-                                @if ($event->event_date == $dateStr)
-                                    <div>
-                                        @include('editEventModal')
-                                    </div>
-                                @endif
-                            @endforeach
+                            <div id="event_list_{{ $dateStr }}">
+                                @foreach ($events as $event)
+                                    @if ($event->event_date == $dateStr)
+                                        <div>
+                                            @include('editEventModal')
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
                         </td>
                     @else
                         <td></td>

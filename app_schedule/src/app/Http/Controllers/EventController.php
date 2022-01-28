@@ -26,12 +26,11 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(EventRequest $request, Event $event)
-    {   
+    {
         $event->fill($request->all());
         $event->user_id = $request->user()->id;
         $event->save();
-        $date = changeDateFormat($event->event_date, 'YYYY-MM');
-        return redirect()->route('calendar.show', ['date' => $date]);
+        return response()->json($event);
     }
 
     /**
@@ -71,4 +70,10 @@ class EventController extends Controller
         $date = changeDateFormat($event->event_date, 'YYYY-MM');
         return redirect()->route('calendar.show', ['date' => $date]);
     }
+
+    // public function test(Request $request)
+    // {
+    //     $id = $request->user();
+    //     return response()->json(['message' => 'ok', 'id' => $id]);
+    // }
 }

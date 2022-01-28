@@ -39,28 +39,13 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                         @endphp
                         <td
                             class="p-2 day {{ $dateStr == $current ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }}{{ $date->isSunday() ? 'text-danger' : '' }} {{ $isHoliday ? 'text-success' : '' }}">
-                            <div id="ex-{{ $dateStr }}" class="modal w-50 h-50 m-auto">
-                                <p>{{ $dateStr }}</p>
-                                <a href="#" rel="modal:close">Close</a>
+                            <div class="day_header">
+                                @include('createEventModal')
                             </div>
-                            <p class="day_header">
-                                <a href="#ex-{{ $dateStr }}" rel="modal:open">
-                                    {{ $date->day }}
-                                    <span>
-                                        {{ $isHoliday ? $holidays[$dateStr] : '' }}
-                                    </span>
-                                </a>
-                            </p>
                             @foreach ($events as $event)
                                 @if ($event->event_date == $dateStr)
                                     <div>
-                                        <div id="ex-edit-{{ $dateStr }}" class="modal w-50 h-50 m-auto">
-                                            <p>{{ $dateStr }} edit</p>
-                                            <a href="#" rel="modal:close">Close</a>
-                                        </div>
-                                        <a class="link_event_edit bg-info bg-gradient" href="#ex-edit-{{ $dateStr }}" rel="modal:open">
-                                            {{ $event->title }}
-                                        </a>
+                                        @include('editEventModal')
                                     </div>
                                 @endif
                             @endforeach

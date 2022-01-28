@@ -16,7 +16,7 @@ td,
     position: relative;
 }
 
-.day_header a:before {
+.day_header > a:before {
     content: '';
     position: absolute;
     top: 0;

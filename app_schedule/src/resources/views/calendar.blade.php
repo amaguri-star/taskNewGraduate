@@ -40,7 +40,7 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                         <td
                             class="p-2 day {{ $dateStr == $current ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }}{{ $date->isSunday() ? 'text-danger' : '' }} {{ $isHoliday ? 'text-success' : '' }}">
                             <div class="day_header">
-                                <button class="create_event_bt" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                                <button class="create_event_bt" onclick="openCreateEventModal('{{ $dateStr }}')">
                                     {{ $date->day }}
                                 </button>
                             </div>
@@ -48,8 +48,8 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                                 @foreach ($events as $event)
                                     @if ($event->event_date == $dateStr)
                                         <div class="event_li">
-                                            <button class="edit_event_bt" data-bs-toggle="modal"
-                                                data-bs-target="#editEventModal">
+                                            <button class="edit_event_bt"
+                                                onclick="openEditEventModal('{{ $event->event_date }}', '{{ $event->title }}')">
                                                 {{ $event->title }}
                                             </button>
                                         </div>

@@ -38,8 +38,26 @@
 //         console.log(err);
 //     });
 // }
-MicroModal.init();
 
 // function editEventCalendar(e, id) {
 //     console.log(e, id)
 // }
+
+function openCreateEventModal(date) {
+    let modalDom = document.getElementById('createEventModal');
+    let modalDomDate = modalDom.querySelector('.modal-date');
+    modalDomDate.textContent = date;
+    let createEventModal = new bootstrap.Modal(modalDom, { keyboard: false });
+    createEventModal.show();
+}
+
+function openEditEventModal(date, content) {
+    let modalDom = document.getElementById('editEventModal');
+    let modalDomDate = modalDom.querySelector('.modal-date');
+    let modalDomInput = modalDom.querySelector('.modal-input');
+    modalDomDate.textContent = date;
+    modalDomInput.value = content;
+    let editEventModal = new bootstrap.Modal(modalDom, { keyboard: false });
+    editEventModal.show();
+}
+

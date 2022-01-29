@@ -1,14 +1,17 @@
-<div id="create-modal-{{ $dateStr }}" class="modal w-50 h-50 m-auto">
-    <p>{{ $dateStr }}</p>
-    <input type="text" name="title" id="create-input-{{ $dateStr }}" class="form-control" required>
-    <button onclick="createEventCalendar(event, '{{ $dateStr }}')">登録</button>
-    <a href="#" rel="modal:close">Close</a>
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createEventModalLabel">イベントを作成</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
-
-{{-- クリック --}}
-<a href="#create-modal-{{ $dateStr }}" rel="modal:open">
-    {{ $date->day }}
-    <span>
-        {{ $isHoliday ? $holidays[$dateStr] : '' }}
-    </span>
-</a>

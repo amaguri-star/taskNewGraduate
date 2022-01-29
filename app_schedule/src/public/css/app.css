@@ -12,11 +12,11 @@
 }
 
 td,
-.link_event_edit {
+.event_li .edit_event_bt {
     position: relative;
 }
 
-.day_header > a:before {
+.day_header .create_event_bt:before {
     content: '';
     position: absolute;
     top: 0;
@@ -27,8 +27,4 @@ td,
 
 .table td {
     height: 100px;
-}
-
-.otherMonth {
-    opacity: 0.4;
 }

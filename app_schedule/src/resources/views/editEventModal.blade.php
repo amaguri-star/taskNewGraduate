@@ -1,11 +1,18 @@
-<div id="edit-modal-{{ $event->id }}" class="modal w-50 h-50 m-auto">
-    <p>{{ $dateStr }} edit</p>
-    <input type="text" name="title" id="edit-input-{{ $event->id }}" class="form-control" value='{{ $event->title }}' required>
-    <button onclick="editEventCalendar(event, '{{ $event->id }}')">編集</button>
-    <a href="#" rel="modal:close">Close</a>
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEventModalLabel">イベントを編集</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-{{-- クリック --}}
-<a class="link_event_edit bg-info bg-gradient" href="#edit-modal-{{ $event->id }}" rel="modal:open">
-    {{ $event->title }}
-</a>

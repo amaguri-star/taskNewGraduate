@@ -54,8 +54,7 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         $event->fill($request->all())->save();
-        $date = changeDateFormat($event->event_date, 'YYYY-MM');
-        return redirect()->route('calendar.show', ['date' => $date]);
+        return response()->json($event);
     }
 
     /**

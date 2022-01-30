@@ -1,63 +1,79 @@
-// function generateEditModal(id, title) {
-//     const htmlcode =
-//         `<div>
-//             <div id="edit-modal-${id}" class="modal w-50 h-50 m-auto">
-//                 <p>${id}</p>
-//                 <input type="text" name="title" id="edit-input-${id}" class="form-control" required>
-//                 <button onclick="editEventCalendar(event, ${id})">編集</button>
-//                 <a href="#" rel="modal:close">Close</a>
-//             </div>
-//             <a class="link_event_edit bg-info bg-gradient" href="#edit-modal-${id}" rel="modal:open">
-//                 ${title}
-//                 <span>
-//                     {{ $isHoliday ? $holidays[$dateStr] : '' }}
-//                 </span>
-//             </a>
-//         <div>`
-//     return htmlcode
-// }
+function createCalendarEvent() {
+    let modal = document.getElementById('createEventModal');
+    let title = modal.querySelector('.modal-input').value;
+    let date = modal.querySelector('.modal-date').textContent;
 
-// function createEventCalendar(e, date) {
-//     let title = document.getElementById(`create-input-${date}`).value;
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: 'events',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            event_date: date,
+            title: title,
+        }
+    }).done((res) => {
+        $(`#event_ul_${date}`).append('後にjsでHTML作成');
+    }).fail((err) => {
+        console.log(err);
+    });
 
-//     $.ajax({
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         },
-//         url: 'events',
-//         type: 'post',
-//         dataType: 'json',
-//         data: {
-//             event_date: date,
-//             title: title,
-//         }
-//     }).done((res) => {
-//         $(`#event_list_${date}`).append(generateEditModal(res.id, res.title));
+    closeModal(modal);
+}
 
-//     }).fail((err) => {
-//         console.log(err);
-//     });
-// }
+function editCalendarEvent() {
+    let modal = document.getElementById('editEventModal');
+    let title = modal.querySelector('.modal-input').value;
+    let date = modal.querySelector('.modal-date').textContent;
+    let id = modal.querySelector('#event-id').value;
+    let event = document.querySelector(`#event_li_${id}`);
 
-// function editEventCalendar(e, id) {
-//     console.log(e, id)
-// }
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: `events/${id}`,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            id: id,
+            event_date: date,
+            title: title,
+        }
+    }).done((res) => {
+        let btn = `<button class="edit_event_bt" onclick="openEditEventModal('${date}', '${id}', '${title}')">${title}</button>`;
+        event.innerHTML = btn;
+    }).fail((err) => {
+        console.log(err);
+    });
+
+    closeModal(modal);
+}
 
 function openCreateEventModal(date) {
     let modalDom = document.getElementById('createEventModal');
     let modalDomDate = modalDom.querySelector('.modal-date');
     modalDomDate.textContent = date;
-    let createEventModal = new bootstrap.Modal(modalDom, { keyboard: false });
-    createEventModal.show();
+    let modalInstance = new bootstrap.Modal(modalDom);
+    modalInstance.show();
 }
 
-function openEditEventModal(date, content) {
+function openEditEventModal(date, id, title) {
     let modalDom = document.getElementById('editEventModal');
     let modalDomDate = modalDom.querySelector('.modal-date');
-    let modalDomInput = modalDom.querySelector('.modal-input');
+    let modalDomTitle = modalDom.querySelector('.modal-input');
+    let modalDomInputForId = modalDom.querySelector('#event-id');
     modalDomDate.textContent = date;
-    modalDomInput.value = content;
-    let editEventModal = new bootstrap.Modal(modalDom, { keyboard: false });
-    editEventModal.show();
+    modalDomTitle.value = title;
+    modalDomInputForId.value = id;
+    let modalInstance = new bootstrap.Modal(modalDom);
+    modalInstance.show();
+}
+
+function closeModal(modal) {
+    modal.querySelector('.modal-input').value = '';
+    bootstrap.Modal.getInstance(modal).hide();
 }
 

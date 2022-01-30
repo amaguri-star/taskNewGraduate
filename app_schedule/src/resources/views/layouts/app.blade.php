@@ -42,7 +42,7 @@
 
     </script>
     <!-- custom js -->
-    <script src="{{ asset('js/calendar.js') }}"></script>
+    <script src="{{ asset('js/calendar.js') }}" async></script>
 </body>
 
 </html>

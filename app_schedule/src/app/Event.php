@@ -10,7 +10,7 @@ class Event extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'event_date', 'title'
+        'date', 'title'
     ];
 
     public function user()

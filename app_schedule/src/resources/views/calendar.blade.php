@@ -47,10 +47,10 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                             </div>
                             <div id="event_ul_{{ $dateStr }}">
                                 @foreach ($events as $event)
-                                    @if ($event->event_date == $dateStr)
+                                    @if ($event->date == $dateStr)
                                         <div id="event_li_{{ $event->id }}" class="event_li">
                                             <button class="edit_event_bt"
-                                                onclick="openEditEventModal('{{ $event->event_date }}','{{ $event->id }}', '{{ $event->title }}')">
+                                                onclick="openEditEventModal('{{ $event->date }}','{{ $event->id }}', '{{ $event->title }}')">
                                                 {{ $event->title }}
                                             </button>
                                         </div>

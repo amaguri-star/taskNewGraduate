@@ -11,7 +11,7 @@ function createCalendarEvent() {
         type: 'post',
         dataType: 'json',
         data: {
-            event_date: date,
+            date: date,
             title: title,
         }
     }).done((res) => {
@@ -20,7 +20,7 @@ function createCalendarEvent() {
         console.log(err);
     });
 
-    closeModal(modal);
+    CreateModal();
 }
 
 function editCalendarEvent() {
@@ -39,7 +39,7 @@ function editCalendarEvent() {
         dataType: 'json',
         data: {
             id: id,
-            event_date: date,
+            date: date,
             title: title,
         }
     }).done((res) => {

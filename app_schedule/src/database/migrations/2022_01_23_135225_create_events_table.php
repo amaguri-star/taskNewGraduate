@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->date('event_date');
+            $table->date('date');
             $table->string('title', 255);
             $table->foreignId('user_id')
                 ->constrained()

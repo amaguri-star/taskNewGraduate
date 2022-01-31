@@ -11,7 +11,7 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
     <div class="container">
         <div class="calendarHeader d-flex p-2">
             <h3 class="dateTitle h3" onclick="sample()">{{ $thisDateStr }}</h3>
-            <div class="ms-auto d-flex">
+            <div class="ml-auto d-flex">
                 <a class="d-block btn btn-primary shadow-sm"
                     href="{{ route('calendar.show', ['date' => $prevMonthStr]) }}">先月</a>
                 <a class="d-block btn btn-primary shadow-sm ms-3"

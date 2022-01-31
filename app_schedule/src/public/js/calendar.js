@@ -1,7 +1,27 @@
+const createModal = document.getElementById('createEventModal');
+const editModal = document.getElementById('editEventModal');
+const eventValidate = {
+    rules: {
+        title: {
+            required: true
+        },
+    },
+    messages: {
+        title: {
+            required: 'このフィールドは必須です'
+        }
+    }
+};
+
 function createCalendarEvent() {
-    let modal = document.getElementById('createEventModal');
-    let title = modal.querySelector('.modal-input').value;
-    let date = modal.querySelector('.modal-date').textContent;
+    let title = createModal.querySelector('.modal-input-title').value;
+    let date = createModal.querySelector('.modal-input-date').value;
+
+    $("#createEventModalForm").validate(eventValidate);
+
+    if (!$('#createEventModalForm').valid()) {
+        return false;
+    }
 
     $.ajax({
         headers: {
@@ -21,15 +41,20 @@ function createCalendarEvent() {
         console.log(err);
     });
 
-    closeModal(modal);
+    closeCreateModal();
 }
 
 function editCalendarEvent() {
-    let modal = document.getElementById('editEventModal');
-    let title = modal.querySelector('.modal-input').value;
-    let date = modal.querySelector('.modal-date').textContent;
-    let id = modal.querySelector('#event-id').value;
+    let title = editModal.querySelector('.modal-input-title').value;
+    let date = editModal.querySelector('.modal-input-date').value;
+    let id = editModal.querySelector('#event-id').value;
     let event = document.querySelector(`#event_li_${id}`);
+
+    $("#editEventModalForm").validate(eventValidate);
+
+    if (!$('#editEventModalForm').valid()) {
+        return false;
+    }
 
     $.ajax({
         headers: {
@@ -51,31 +76,37 @@ function editCalendarEvent() {
         console.log(err);
     });
 
-    closeModal(modal);
+    closeEditModal();
 }
 
 function openCreateEventModal(date) {
-    let modalDom = document.getElementById('createEventModal');
-    let modalDomDate = modalDom.querySelector('.modal-date');
-    modalDomDate.textContent = date;
-    let modalInstance = new bootstrap.Modal(modalDom);
-    modalInstance.show();
+    let modalDate = createModal.querySelector('.modal-input-date');
+    modalDate.value = date;
+    $(createModal).modal('show');
 }
 
 function openEditEventModal(date, id, title) {
-    let modalDom = document.getElementById('editEventModal');
-    let modalDomDate = modalDom.querySelector('.modal-date');
-    let modalDomTitle = modalDom.querySelector('.modal-input');
-    let modalDomInputForId = modalDom.querySelector('#event-id');
-    modalDomDate.textContent = date;
-    modalDomTitle.value = title;
-    modalDomInputForId.value = id;
-    let modalInstance = new bootstrap.Modal(modalDom);
-    modalInstance.show();
+    let modalDate = editModal.querySelector('.modal-input-date');
+    let modalTitle = editModal.querySelector('.modal-input-title');
+    let modalInputForId = editModal.querySelector('#event-id');
+    modalDate.value = date;
+    modalTitle.value = title;
+    modalInputForId.value = id;
+    $(editModal).modal('show');
 }
 
-function closeModal(modal) {
-    modal.querySelector('.modal-input').value = '';
-    bootstrap.Modal.getInstance(modal).hide();
+function removeLavelIfExists(modal) {
+    let label = modal.querySelector('label')
+    !!label ? label.remove() : '';
 }
 
+function closeCreateModal() {
+    createModal.querySelector('.modal-input-title').value = '';
+    removeLavelIfExists(createModal)
+    $(createModal).modal('hide');
+}
+
+function closeEditModal() {
+    removeLavelIfExists(editModal);
+    $(editModal).modal('hide');
+}

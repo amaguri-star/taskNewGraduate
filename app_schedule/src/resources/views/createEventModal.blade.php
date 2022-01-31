@@ -3,15 +3,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createEventModalLabel">イベントを作成 <span class="modal-date"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="createEventModalLabel">イベントを作成</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <input type="text" name="title" class="modal-input form-control">
-            </div>
+            <form id="createEventModalForm" class="modal-body">
+                <input type="date" name="date" class="modal-input-date" readonly>
+                <input type="text" name="title" class="modal-input-title form-control">
+            </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                <button onclick="createCalendarEvent()" type="button" class="btn btn-primary">登録</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    onclick="closeCreateModal()">閉じる</button>
+                <button type="button" class="btn btn-primary" onclick="createCalendarEvent()">登録</button>
             </div>
         </div>
     </div>

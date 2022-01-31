@@ -10,7 +10,7 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
 @section('content')
     <div class="container">
         <div class="calendarHeader d-flex p-2">
-            <h3 class="dateTitle h3">{{ $thisDateStr }}</h3>
+            <h3 class="dateTitle h3" onclick="sample()">{{ $thisDateStr }}</h3>
             <div class="ms-auto d-flex">
                 <a class="d-block btn btn-primary shadow-sm"
                     href="{{ route('calendar.show', ['date' => $prevMonthStr]) }}">先月</a>
@@ -40,7 +40,7 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                         <td
                             class="p-2 day {{ $dateStr == $current ? 'bg-warning bg-gradient' : '' }} {{ $date->isSaturday() ? 'text-primary' : '' }}{{ $date->isSunday() ? 'text-danger' : '' }} {{ $isHoliday ? 'text-success' : '' }}">
                             <div class="day_header">
-                                <button class="create_event_bt" onclick="openCreateEventModal('{{ $dateStr }}')">
+                                <button class="create_event_bt" onclick="openCreateModal('{{ $dateStr }}')">
                                     {{ $date->day }}
                                     <span>{{ $isHoliday ? $holidays[$dateStr] : '' }}</span>
                                 </button>
@@ -49,10 +49,7 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                                 @foreach ($events as $event)
                                     @if ($event->date == $dateStr)
                                         <div id="event_li_{{ $event->id }}" class="event_li">
-                                            <button class="edit_event_bt"
-                                                onclick="openEditEventModal('{{ $event->date }}','{{ $event->id }}', '{{ $event->title }}')">
-                                                {{ $event->title }}
-                                            </button>
+                                            <button class="edit_event_bt" onclick="openEditModal('{{ $dateStr }}', '{{ $event->id }}', '{{ $event->title }}')">{{ $event->title }}</button>
                                         </div>
                                     @endif
                                 @endforeach

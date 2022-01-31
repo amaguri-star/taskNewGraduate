@@ -38943,6 +38943,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
 
+__webpack_require__(/*! ./calendar */ "./resources/js/calendar.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -38987,6 +38989,119 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/calendar.js":
+/*!**********************************!*\
+  !*** ./resources/js/calendar.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var createModal = document.getElementById('createEventModal');
+var editModal = document.getElementById('editEventModal');
+var eventValidate = {
+  rules: {
+    title: {
+      required: true
+    }
+  },
+  messages: {
+    title: {
+      required: 'このフィールドは必須です'
+    }
+  }
+};
+
+window.createCalendarEvent = function createCalendarEvent() {
+  var title = createModal.querySelector('.modal-input-title').value;
+  var date = createModal.querySelector('.modal-input-date').value;
+  $("#createEventModalForm").validate(eventValidate);
+
+  if (!$('#createEventModalForm').valid()) {
+    return false;
+  }
+
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: 'events',
+    type: 'post',
+    dataType: 'json',
+    data: {
+      date: date,
+      title: title
+    }
+  }).done(function (res) {
+    var btn = "<div id=\"event_li_".concat(res.id, "\" class=\"event_li\"><button class=\"edit_event_bt\" onclick=\"openEditModal('").concat(res.date, "', '").concat(res.id, "', '").concat(res.title, "')\">").concat(res.title, "</button></div>");
+    $("#event_ul_".concat(res.date)).append(btn);
+  }).fail(function (err) {
+    console.log(err);
+  });
+  closeCreateModal();
+};
+
+window.editCalendarEvent = function editCalendarEvent() {
+  var title = editModal.querySelector('.modal-input-title').value;
+  var date = editModal.querySelector('.modal-input-date').value;
+  var id = editModal.querySelector('#event-id').value;
+  var event = document.querySelector("#event_li_".concat(id));
+  $("#editEventModalForm").validate(eventValidate);
+
+  if (!$('#editEventModalForm').valid()) {
+    return false;
+  }
+
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: "events/".concat(id),
+    type: 'post',
+    dataType: 'json',
+    data: {
+      id: id,
+      date: date,
+      title: title
+    }
+  }).done(function (res) {
+    var btn = "<button class=\"edit_event_bt\" onclick=\"openEditModal('".concat(res.date, "', '").concat(res.id, "', '").concat(res.title, "')\">").concat(res.title, "</button>");
+    event.innerHTML = btn;
+  }).fail(function (err) {
+    console.log(err);
+  });
+  closeEditModal();
+};
+
+window.openCreateModal = function openCreateModal(date) {
+  createModal.querySelector('.modal-input-date').value = date;
+  $(createModal).modal('show');
+};
+
+window.openEditModal = function openEditModal(date, id, title) {
+  editModal.querySelector('.modal-input-date').value = date;
+  editModal.querySelector('.modal-input-title').value = title;
+  editModal.querySelector('#event-id').value = id;
+  $(editModal).modal('show');
+};
+
+function removeLavelIfExists(modal) {
+  var label = modal.querySelector('label');
+  !!label ? label.remove() : '';
+}
+
+window.closeCreateModal = function closeCreateModal() {
+  createModal.querySelector('.modal-input-title').value = '';
+  removeLavelIfExists(createModal);
+  $(createModal).modal('hide');
+};
+
+window.closeEditModal = function closeEditModal() {
+  removeLavelIfExists(editModal);
+  $(editModal).modal('hide');
+};
 
 /***/ }),
 

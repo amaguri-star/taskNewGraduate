@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editEventModalLabel">イベントを編集</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" onclick="closeEditModal()"></button>
             </div>
             <form id="editEventModalForm" class="modal-body">
                 <input type="hidden" name="id" id="event-id">
@@ -11,9 +11,9 @@
                 <input type="text" name="title" class="modal-input-title form-control">
             </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    onclick="closeEditModal()">閉じる</button>
-                <button type="button" class="btn btn-primary" onclick="editCalendarEvent()">編集</button>
+                <button type="button" class="close-edit-modal btn btn-secondary" onclick="closeEditModal()">閉じる</button>
+                <button type="button" class="submit-edit-event btn btn-primary"
+                    onclick="editCalendarEvent()">編集</button>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 const createModal = document.getElementById('createEventModal');
 const editModal = document.getElementById('editEventModal');
+
 const eventValidate = {
     rules: {
         title: {
@@ -13,7 +14,7 @@ const eventValidate = {
     }
 };
 
-function createCalendarEvent() {
+window.createCalendarEvent = function createCalendarEvent() {
     let title = createModal.querySelector('.modal-input-title').value;
     let date = createModal.querySelector('.modal-input-date').value;
 
@@ -35,7 +36,7 @@ function createCalendarEvent() {
             title: title,
         }
     }).done((res) => {
-        const btn = `<div id="event_li_${res.id}" class="event_li"><button class="edit_event_bt" onclick="openEditEventModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button></div>`
+        const btn = `<div id="event_li_${res.id}" class="event_li"><button class="edit_event_bt" onclick="openEditModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button></div>`
         $(`#event_ul_${res.date}`).append(btn);
     }).fail((err) => {
         console.log(err);
@@ -44,7 +45,7 @@ function createCalendarEvent() {
     closeCreateModal();
 }
 
-function editCalendarEvent() {
+window.editCalendarEvent = function editCalendarEvent() {
     let title = editModal.querySelector('.modal-input-title').value;
     let date = editModal.querySelector('.modal-input-date').value;
     let id = editModal.querySelector('#event-id').value;
@@ -69,8 +70,7 @@ function editCalendarEvent() {
             title: title,
         }
     }).done((res) => {
-        console.log(event);
-        const btn = `<button class="edit_event_bt" onclick="openEditEventModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button>`;
+        const btn = `<button class="edit_event_bt" onclick="openEditModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button>`;
         event.innerHTML = btn;
     }).fail((err) => {
         console.log(err);
@@ -79,19 +79,15 @@ function editCalendarEvent() {
     closeEditModal();
 }
 
-function openCreateEventModal(date) {
-    let modalDate = createModal.querySelector('.modal-input-date');
-    modalDate.value = date;
+window.openCreateModal = function openCreateModal(date) {
+    createModal.querySelector('.modal-input-date').value = date;
     $(createModal).modal('show');
 }
 
-function openEditEventModal(date, id, title) {
-    let modalDate = editModal.querySelector('.modal-input-date');
-    let modalTitle = editModal.querySelector('.modal-input-title');
-    let modalInputForId = editModal.querySelector('#event-id');
-    modalDate.value = date;
-    modalTitle.value = title;
-    modalInputForId.value = id;
+window.openEditModal = function openEditModal(date, id, title) {
+    editModal.querySelector('.modal-input-date').value = date;
+    editModal.querySelector('.modal-input-title').value = title;
+    editModal.querySelector('#event-id').value = id;
     $(editModal).modal('show');
 }
 
@@ -100,13 +96,13 @@ function removeLavelIfExists(modal) {
     !!label ? label.remove() : '';
 }
 
-function closeCreateModal() {
+window.closeCreateModal = function closeCreateModal() {
     createModal.querySelector('.modal-input-title').value = '';
     removeLavelIfExists(createModal)
     $(createModal).modal('hide');
 }
 
-function closeEditModal() {
+window.closeEditModal = function closeEditModal() {
     removeLavelIfExists(editModal);
     $(editModal).modal('hide');
 }

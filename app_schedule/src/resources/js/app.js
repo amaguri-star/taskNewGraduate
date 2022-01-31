@@ -6,3 +6,4 @@
 
 require('./bootstrap');
 require('jquery-validation');
+require('./calendar');

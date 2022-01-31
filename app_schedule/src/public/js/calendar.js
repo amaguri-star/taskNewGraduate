@@ -15,12 +15,13 @@ function createCalendarEvent() {
             title: title,
         }
     }).done((res) => {
-        $(`#event_ul_${date}`).append('後にjsでHTML作成');
+        const btn = `<div id="event_li_${res.id}" class="event_li"><button class="edit_event_bt" onclick="openEditEventModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button></div>`
+        $(`#event_ul_${res.date}`).append(btn);
     }).fail((err) => {
         console.log(err);
     });
 
-    CreateModal();
+    closeModal(modal);
 }
 
 function editCalendarEvent() {
@@ -43,7 +44,8 @@ function editCalendarEvent() {
             title: title,
         }
     }).done((res) => {
-        let btn = `<button class="edit_event_bt" onclick="openEditEventModal('${date}', '${id}', '${title}')">${title}</button>`;
+        console.log(event);
+        const btn = `<button class="edit_event_bt" onclick="openEditEventModal('${res.date}', '${res.id}', '${res.title}')">${res.title}</button>`;
         event.innerHTML = btn;
     }).fail((err) => {
         console.log(err);

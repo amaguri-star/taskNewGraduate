@@ -49,8 +49,14 @@ $nextMonthStr = $nextMonth->isoformat('YYYY-MM');
                                 @foreach ($events as $event)
                                     @if ($event->date == $dateStr)
                                         <div id="event_li_{{ $event->id }}" class="event_li">
-                                            <button class="edit_event_bt" onclick="openEditModal('{{ $dateStr }}', '{{ $event->id }}', '{{ $event->title }}')">{{ $event->title }}</button>
+                                            <button class="edit_event_bt"
+                                                onclick="openEditModal('{{ $dateStr }}', '{{ $event->id }}', '{{ $event->title }}')">{{ $event->title }}</button>
                                         </div>
+                                    @endif
+                                @endforeach
+                                @foreach ($eventsOnGoogle as $event)
+                                    @if ($event->start->getDate() == $dateStr)
+                                        <div>{{ $event->getSummary() }}</div>
                                     @endif
                                 @endforeach
                             </div>

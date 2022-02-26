@@ -69,10 +69,4 @@ class EventController extends Controller
         $date = changeDateFormat($event->event_date, 'YYYY-MM');
         return redirect()->route('calendar.show', ['date' => $date]);
     }
-
-    // public function test(Request $request)
-    // {
-    //     $id = $request->user();
-    //     return response()->json(['message' => 'ok', 'id' => $id]);
-    // }
 }

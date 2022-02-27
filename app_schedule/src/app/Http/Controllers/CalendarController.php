@@ -12,6 +12,9 @@ use Yasumi\Yasumi;
 /**
  * カレンダー操作用のコントローラークラス
  * 
+ * @access public
+ * @author ryusei
+ * @package Controller
  */
 class CalendarController extends Controller
 {
